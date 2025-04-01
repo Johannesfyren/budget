@@ -7,7 +7,7 @@ export default function SideNavBar() {
             <NavLink to={'/'} end>
                 Home
             </NavLink>
-            <NavLink to={'/setup'} end>
+            <NavLink to={'/setup/1'} end>
                 Opsætning
             </NavLink>
         </nav>
