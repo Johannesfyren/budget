@@ -3,13 +3,13 @@ import styles from "./setup.module.css"
 
 interface InputProps{
     children: ReactNode
-    sectionName: string
+    categoryName: string
 }
 
-export default function Category({children, sectionName}:InputProps){
+export default function Category({children, categoryName}:InputProps){
     return(
         <>    
-            <h2>{sectionName}</h2>
+            <h2>{categoryName}</h2>
             <article className={styles["section-container"]}>
                 {children}
                 <button>Tilføj</button>

@@ -25,7 +25,7 @@ input{
     justify-content: center;
     align-items: center;
     height: 50px;
-    border: 1px solid black;
+    border: 1px solid rgb(197, 194, 194);
     border-radius: 100px;
     width: fit-content;
     margin: 0 auto 0 auto;
@@ -36,7 +36,7 @@ input{
     }
 
     .nav-item-active{
-        transition: all 0.2s ease-out;
+        transition: all 0.1s ease-in;
         display: flex;
         justify-content: center;
         align-items: center;
