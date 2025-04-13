@@ -5,7 +5,7 @@ export default function Login() {
 	const [email, setEmail] = useState("");
 	const [password, setPassword] = useState("");
 	const [loginError, setLoginError] = useState("");
-	let navigate = useNavigate();
+	const navigate = useNavigate();
 
 	async function login(e: React.FormEvent<HTMLFormElement>) {
 		e.preventDefault();

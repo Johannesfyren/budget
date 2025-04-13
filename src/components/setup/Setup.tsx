@@ -3,15 +3,33 @@ import Category from "./Category";
 import styles from "./setup.module.css";
 import SetupNavigation from "./SetupNavigation";
 import { useQuery } from "@tanstack/react-query";
-import { useParams } from "react-router";
+import { useParams, useNavigate } from "react-router";
 
 export default function Setup() {
 	const params = useParams();
+	const navigate = useNavigate();
 
 	const query = useQuery({
 		queryKey: ["expenses", params.ID],
 		queryFn: () => getExpenses(Number(params.ID)),
 	});
+
+	const getExpenses = async (params: number) => {
+		const response = await fetch(`http://127.0.0.1:3001/setup/${params}`, {
+			headers: {
+				authorization: `authorization ${localStorage.getItem(
+					"accessToken"
+				)}`,
+			},
+		});
+		console.log(response.status);
+		if (response.status >= 401) {
+			console.log("redirecting");
+			navigate("/login");
+		}
+
+		return await response.json();
+	};
 
 	return (
 		<main className={styles["container"]}>
@@ -26,8 +44,3 @@ export default function Setup() {
 		</main>
 	);
 }
-
-const getExpenses = async (params: number) => {
-	const response = await fetch(`http://127.0.0.1:3001/setup/${params}`);
-	return await response.json();
-};
