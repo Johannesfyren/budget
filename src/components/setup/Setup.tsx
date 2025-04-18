@@ -4,7 +4,7 @@ import styles from "./setup.module.css";
 import SetupNavigation from "./SetupNavigation";
 import { useQuery } from "@tanstack/react-query";
 import { useParams, useNavigate } from "react-router";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
 export default function Setup() {
 	const params = useParams();
@@ -31,6 +31,7 @@ export default function Setup() {
 
 		const data = await response.json();
 		setUniqueCategories(getUniqueCategories(data));
+		console.log(data);
 		return await data;
 	};
 
@@ -38,7 +39,7 @@ export default function Setup() {
 		<main className={styles["container"]}>
 			<h1>Setup</h1>
 			<SetupNavigation />
-			{console.log(uniqueCategories)}
+
 			{uniqueCategories.length > 0 &&
 				uniqueCategories.map((category) => {
 					return (
@@ -53,6 +54,8 @@ export default function Setup() {
 										return (
 											<Input
 												inputName={expense.expenseName}
+												payRate={expense.payRate}
+												amount={expense.expenseValue}
 												key={expense.expenseName}
 											/>
 										);

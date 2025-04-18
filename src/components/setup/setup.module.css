@@ -1,58 +1,70 @@
-.container{
-    display: flex;
-    flex-direction: column;
-    width: 100%;
+.container {
+	display: flex;
+	flex-direction: column;
+	width: 100%;
 }
 
-.section-container{
-    display: flex;
-    flex-wrap: wrap;
-    gap: 20px;
+.section-container {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 20px;
 }
 
-.input-container{
-    display: flex;
-    flex-direction: column;
+.input-container {
+	display: flex;
+	flex-direction: column;
 }
-input{
-    height: 30px;
-    border-radius: 3px;
-    border: 1px solid rgb(208, 208, 208);
+input {
+	height: 30px;
+	border-radius: 3px;
+	border: 1px solid rgb(208, 208, 208);
 }
 
-.nav-container{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 50px;
-    border: 1px solid rgb(197, 194, 194);
-    border-radius: 100px;
-    width: fit-content;
-    margin: 0 auto 0 auto;
-    
-    *{
-        padding: 0px 20px 0px 20px;
-        color: black;
-    }
+.nav-container {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	height: 50px;
+	border: 1px solid rgb(197, 194, 194);
+	border-radius: 100px;
+	width: fit-content;
+	margin: 0 auto 0 auto;
 
-    .nav-item-active{
-        transition: all 0.1s ease-in;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        background-color: rgb(220, 207, 249);
-        border-radius: 100px;
-        height: 48px;
-    }
-    
+	* {
+		padding: 0px 20px 0px 20px;
+		color: black;
+	}
+
+	.nav-item-active {
+		transition: all 0.1s ease-in;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		background-color: rgb(220, 207, 249);
+		border-radius: 100px;
+		height: 48px;
+	}
 }
-/* .nav-item-active{
-    display: flex;
-    height: 48px;
-    background-color: rgb(220, 207, 249);
-    border-radius: 100px;
-    width: fit-content;
-    justify-content: center;
-    align-items: center;
-    padding: 0px 20px 0px 20px;
-} */
+input {
+	border: none;
+	width: auto;
+}
+
+.input-select-wrapper {
+	padding: 8px 8px 8px 8px;
+	border: 1px solid #ccc;
+	border-radius: 4px;
+
+	select {
+		width: fit-content;
+		appearance: none; /* Hide default dropdown arrow */
+		-webkit-appearance: none;
+		-moz-appearance: none;
+		border: none;
+		content: "";
+	}
+	select::after {
+		content: "s";
+		width: 10px;
+	}
+}
