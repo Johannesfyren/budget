@@ -4,11 +4,13 @@ import styles from "./setup.module.css";
 import SetupNavigation from "./SetupNavigation";
 import { useQuery } from "@tanstack/react-query";
 import { useParams, useNavigate } from "react-router";
+import { useEffect, useState } from "react";
 
 export default function Setup() {
 	const params = useParams();
 	const navigate = useNavigate();
-
+	const [uniqueCategories, setUniqueCategories] = useState<string[]>([]);
+	console.log(uniqueCategories);
 	const query = useQuery({
 		queryKey: ["expenses", params.ID],
 		queryFn: () => getExpenses(Number(params.ID)),
@@ -22,25 +24,56 @@ export default function Setup() {
 				)}`,
 			},
 		});
-		console.log(response.status);
+
 		if (response.status >= 401) {
-			console.log("redirecting");
 			navigate("/login");
 		}
 
-		return await response.json();
+		const data = await response.json();
+		setUniqueCategories(getUniqueCategories(data));
+		return await data;
 	};
 
 	return (
 		<main className={styles["container"]}>
 			<h1>Setup</h1>
 			<SetupNavigation />
-
-			<Category categoryName="Transport">
-				<Input inputName="test" />
-				<Input inputName="test2" />
-			</Category>
-			{JSON.stringify(query.data)}
+			{console.log(uniqueCategories)}
+			{uniqueCategories.length > 0 &&
+				uniqueCategories.map((category) => {
+					return (
+						<Category categoryName={category} key={category}>
+							{query.data &&
+								query.data
+									.filter(
+										(expense) =>
+											expense.category == category
+									)
+									.map((expense) => {
+										return (
+											<Input
+												inputName={expense.expenseName}
+												key={expense.expenseName}
+											/>
+										);
+									})}
+						</Category>
+					);
+				})}
+			{query.isLoading && <p>Loading...</p>}
 		</main>
 	);
+}
+
+function getUniqueCategories(data: Array<{ category: string }>) {
+	const uniqueCategories: string[] = [];
+
+	for (let i = 0; i < data.length; i++) {
+		const currentCategory = data[i].category;
+
+		if (!uniqueCategories.includes(currentCategory)) {
+			uniqueCategories.push(currentCategory);
+		}
+	}
+	return uniqueCategories;
 }
