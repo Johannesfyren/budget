@@ -45,10 +45,6 @@ input {
 		height: 48px;
 	}
 }
-input {
-	border: none;
-	width: auto;
-}
 
 .input-select-wrapper {
 	padding: 8px 8px 8px 8px;
@@ -62,9 +58,24 @@ input {
 		-moz-appearance: none;
 		border: none;
 		content: "";
+		cursor: pointer;
 	}
 	select::after {
 		content: "s";
 		width: 10px;
 	}
+	input {
+		border: none;
+		width: auto;
+		outline: none;
+	}
+
+	input:focus {
+		border: none;
+		width: auto;
+		outline: none;
+	}
+}
+.input-select-wrapper:has(input:focus, select:focus) {
+	border: 1px solid blue;
 }
