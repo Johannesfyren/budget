@@ -10,7 +10,7 @@ export default function Setup() {
 	const params = useParams();
 	const navigate = useNavigate();
 	const [uniqueCategories, setUniqueCategories] = useState<string[]>([]);
-	console.log(uniqueCategories);
+
 	const query = useQuery({
 		queryKey: ["expenses", params.ID],
 		queryFn: () => getExpenses(Number(params.ID)),
@@ -34,6 +34,19 @@ export default function Setup() {
 		console.log(data);
 		return await data;
 	};
+	function getUniqueCategories(data: Array<{ category: string }>) {
+		const uniqueCategories: string[] = [];
+
+		for (let i = 0; i < data.length; i++) {
+			const currentCategory = data[i].category;
+
+			if (!uniqueCategories.includes(currentCategory)) {
+				uniqueCategories.push(currentCategory);
+			}
+		}
+		console.log(uniqueCategories);
+		return uniqueCategories;
+	}
 
 	return (
 		<main className={styles["container"]}>
@@ -50,13 +63,16 @@ export default function Setup() {
 										(expense) =>
 											expense.category == category
 									)
+									.sort((a, b) => a.expenseID - b.expenseID) //sorter array så vi får korrekt rækkefælge
 									.map((expense) => {
 										return (
 											<Input
 												inputName={expense.expenseName}
 												payRate={expense.payRate}
 												amount={expense.expenseValue}
-												key={expense.expenseName}
+												categoryID={expense.categoryID}
+												expenseID={expense.expenseID}
+												key={expense.expenseID}
 											/>
 										);
 									})}
@@ -66,17 +82,4 @@ export default function Setup() {
 			{query.isLoading && <p>Loading...</p>}
 		</main>
 	);
-}
-
-function getUniqueCategories(data: Array<{ category: string }>) {
-	const uniqueCategories: string[] = [];
-
-	for (let i = 0; i < data.length; i++) {
-		const currentCategory = data[i].category;
-
-		if (!uniqueCategories.includes(currentCategory)) {
-			uniqueCategories.push(currentCategory);
-		}
-	}
-	return uniqueCategories;
 }
