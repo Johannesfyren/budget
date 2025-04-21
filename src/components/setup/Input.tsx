@@ -1,6 +1,6 @@
 import { useState } from "react";
 import styles from "./setup.module.css";
-import { useMutation } from "@tanstack/react-query";
+import { useQueryClient, useMutation } from "@tanstack/react-query";
 import { useParams } from "react-router";
 
 interface InputProps {
@@ -21,31 +21,41 @@ export default function Input({
 	const [selectedPayrate, setSelectedPayrate] = useState(payRate);
 	const [selectedAmount, setSelectedAmount] = useState(amount);
 	const [changedInput, setChangedInput] = useState(false);
+	const queryClient = useQueryClient();
 
 	const saveChangeToDB = async (amount: number, payRate: number) => {
 		if (!changedInput) return;
-		console.log(inputName, amount, payRate, categoryID);
-		const response = await fetch(
-			`http://127.0.0.1:3001/setup/postExpense/${expenseID}`,
-			{
-				headers: {
-					authorization: `authorization ${localStorage.getItem(
-						"accessToken"
-					)}`,
-					"content-type": "application/json",
-				},
-				method: "POST",
+		try {
+			const response = await fetch(
+				`http://127.0.0.1:3001/setup/postExpense/${expenseID}`,
+				{
+					headers: {
+						authorization: `authorization ${localStorage.getItem(
+							"accessToken"
+						)}`,
+						"content-type": "application/json",
+					},
+					method: "POST",
 
-				body: JSON.stringify({
-					name: inputName,
-					amount: amount,
-					payRate: payRate,
-					categoryID: categoryID,
-				}),
-			}
-		);
-		const data = await response.json();
-		return data;
+					body: JSON.stringify({
+						name: inputName,
+						amount: amount,
+						payRate: payRate,
+						categoryID: categoryID,
+					}),
+				}
+			);
+			const data = await response.json();
+			// queryClient.invalidateQueries({
+			// 	queryKey: ["expenses"],
+			// });
+			// await queryClient.refetchQueries({
+			// 	queryKey: ["expenses"],
+			// });
+			return data;
+		} catch (error) {
+			console.log(error);
+		}
 	};
 
 	const mutation = useMutation({
@@ -65,7 +75,7 @@ export default function Input({
 						setSelectedAmount(Number(e.target.value));
 						setChangedInput(true);
 					}}
-					onBlur={(e) => mutation.mutate()}
+					onBlur={() => mutation.mutate()}
 				/>
 
 				<select
