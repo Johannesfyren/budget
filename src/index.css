@@ -1,17 +1,15 @@
-*{
-    font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
-    padding: 0;
-    margin: 0;
-    box-sizing: border-box;
-  }
+* {
+	font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
+	padding: 0;
+	margin: 0;
+	box-sizing: border-box;
+}
+body {
+	position: relative;
+}
 /* :root {
     
     padding: 0;
     margin: 0;
     box-sizing: inherit;
   } */
-
-
-
-  
-  

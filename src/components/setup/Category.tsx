@@ -1,6 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 import Input from "./Input";
 import styles from "./setup.module.css";
+import Modal from "./Modal";
 
 interface InputProps {
 	categoryID: number;
@@ -12,7 +13,7 @@ export default function Category({ categoryName, categoryID }: InputProps) {
 		queryKey: ["expenses", categoryID],
 		queryFn: () => getExpenses(),
 	});
-	console.log("mycatID", categoryID);
+
 	const getExpenses = async () => {
 		try {
 			const response = await fetch(
@@ -31,13 +32,50 @@ export default function Category({ categoryName, categoryID }: InputProps) {
 			// }
 
 			const data = await response.json();
-			console.log("expenses", data);
+
 			return data;
 		} catch (error) {
 			console.log(error);
 		}
 	};
 
+	const createExpense = async (
+		categoryID: number,
+		name: string,
+		value: number,
+		payrate: number
+	) => {
+		try {
+			const response = await fetch(
+				`http://127.0.0.1:3001/setup/newExpense`,
+				{
+					headers: {
+						authorization: `authorization ${localStorage.getItem(
+							"accessToken"
+						)}`,
+						"content-type": "application/json",
+					},
+					method: "POST",
+
+					body: JSON.stringify({
+						categoryID: categoryID,
+						name: name,
+						value: value,
+						payrate: payrate,
+					}),
+				}
+			);
+			const data = await response.text();
+			return data;
+		} catch (error) {
+			console.log(error);
+			throw error;
+		}
+	};
+
+	function handleNewExpense() {
+		confirm("hello");
+	}
 	return (
 		<>
 			<h2>{categoryName}</h2>
@@ -56,20 +94,16 @@ export default function Category({ categoryName, categoryID }: InputProps) {
 						);
 					})}
 
-				<button>Tilføj</button>
+				<Modal>
+					<form>
+						<label htmlFor="name">Expense name</label>
+						<input type="text" name="name"></input>
+						<label htmlFor="value">Amount</label>
+						<input type="number" name="value"></input>
+						<button>submit</button>
+					</form>
+				</Modal>
 			</article>
 		</>
 	);
 }
-
-// export default function Category({ children, categoryName }: InputProps) {
-// 	return (
-// 		<>
-// 			<h2>{categoryName}</h2>
-// 			<article className={styles["section-container"]}>
-// 				{children}
-// 				<button>Tilføj</button>
-// 			</article>
-// 		</>
-// 	);
-// }

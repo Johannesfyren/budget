@@ -36,7 +36,7 @@ export default function Setup() {
 			}
 
 			const data = await response.json();
-			console.log(data);
+
 			return data;
 		} catch (error) {
 			console.log(error);
@@ -66,7 +66,7 @@ export default function Setup() {
 			if (response.status >= 401) {
 				navigate("/login");
 			}
-			//queryClient.invalidateQueries({ queryKey: ["expenses"] });
+			queryClient.invalidateQueries({ queryKey: ["categories"] });
 			const data = await response;
 			console.log(data);
 			return data;

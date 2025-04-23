@@ -1,7 +1,7 @@
 import { useState } from "react";
 import styles from "./setup.module.css";
 import { useQueryClient, useMutation } from "@tanstack/react-query";
-import { useParams } from "react-router";
+import TextInput from "./TextInput";
 
 interface InputProps {
 	inputName: string;
@@ -20,11 +20,11 @@ export default function Input({
 }: InputProps) {
 	const [selectedPayrate, setSelectedPayrate] = useState(payRate);
 	const [selectedAmount, setSelectedAmount] = useState(amount);
-	const [changedInput, setChangedInput] = useState(false);
-	const queryClient = useQueryClient();
+	const [expenseName, setExpenseName] = useState(inputName ? inputName : "");
+
+	const [error, setError] = useState(false);
 
 	const saveChangeToDB = async (amount: number, payRate: number) => {
-		if (!changedInput) return;
 		try {
 			const response = await fetch(
 				`http://127.0.0.1:3001/setup/postExpense/${expenseID}`,
@@ -38,44 +38,61 @@ export default function Input({
 					method: "POST",
 
 					body: JSON.stringify({
-						name: inputName,
+						name: expenseName,
 						amount: amount,
 						payRate: payRate,
 						categoryID: categoryID,
 					}),
 				}
 			);
-			const data = await response.json();
-			// queryClient.invalidateQueries({
-			// 	queryKey: ["expenses"],
-			// });
-			// await queryClient.refetchQueries({
-			// 	queryKey: ["expenses"],
-			// });
+			const data = await response.text();
 			return data;
 		} catch (error) {
 			console.log(error);
+			throw error;
 		}
 	};
 
 	const mutation = useMutation({
 		mutationFn: () => saveChangeToDB(selectedAmount, selectedPayrate),
-	});
+		onSuccess: (data) => {
+			// Handle the success case here
+			console.log("Mutation successful:", data);
 
+			// Optionally reset the changed input state
+
+			// Perform any additional actions, like invalidating queries or showing a success message
+		},
+		onError: (error) => {
+			// Handle the error case here
+			console.error("Mutation failed:", error);
+			setError(true);
+		},
+	});
+	const triggerMutate = () => {
+		mutation.mutate();
+	};
 	return (
 		<div className={styles["input-container"]}>
-			<label htmlFor={inputName}>{inputName}</label>
+			<label htmlFor={expenseName}>
+				<TextInput
+					expenseName={expenseName}
+					setExpenseName={setExpenseName}
+					handleMutation={triggerMutate}
+				/>
+			</label>
 			<div className={styles["input-select-wrapper"]}>
 				<input
 					type="number"
-					name={inputName}
-					id={inputName}
+					name={expenseName}
+					id={expenseName}
 					defaultValue={amount}
 					onChange={(e) => {
 						setSelectedAmount(Number(e.target.value));
-						setChangedInput(true);
 					}}
-					onBlur={() => mutation.mutate()}
+					onBlur={() => {
+						mutation.mutate();
+					}}
 				/>
 
 				<select
@@ -83,7 +100,6 @@ export default function Input({
 					defaultValue={payRate}
 					onChange={(e) => {
 						setSelectedPayrate(Number(e.target.value));
-						setChangedInput(true);
 					}}
 					onBlur={() => mutation.mutate()}
 				>
@@ -92,6 +108,7 @@ export default function Input({
 					<option value={3}>DKK/Yr</option>
 				</select>
 			</div>
+			{error && <p>Something went wrong</p>}
 		</div>
 	);
 }
