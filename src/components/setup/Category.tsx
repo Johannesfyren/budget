@@ -1,4 +1,4 @@
-import { useQuery } from "@tanstack/react-query";
+import { useQuery, useMutation } from "@tanstack/react-query";
 import Input from "./Input";
 import styles from "./setup.module.css";
 import Modal from "./Modal";
@@ -14,6 +14,22 @@ export default function Category({ categoryName, categoryID }: InputProps) {
 		queryFn: () => getExpenses(),
 	});
 
+	const mutation = useMutation({
+		mutationFn: () => createExpense(categoryID, "", 0, 1),
+		onSuccess: (data) => {
+			// Handle the success case here
+			console.log("Mutation successful:", data);
+			query.refetch();
+
+			// Optionally reset the changed input state
+
+			// Perform any additional actions, like invalidating queries or showing a success message
+		},
+		onError: (error) => {
+			// Handle the error case here
+			console.error("Mutation failed:", error);
+		},
+	});
 	const getExpenses = async () => {
 		try {
 			const response = await fetch(
@@ -74,7 +90,7 @@ export default function Category({ categoryName, categoryID }: InputProps) {
 	};
 
 	function handleNewExpense() {
-		confirm("hello");
+		mutation.mutate();
 	}
 	return (
 		<>
@@ -94,7 +110,7 @@ export default function Category({ categoryName, categoryID }: InputProps) {
 						);
 					})}
 
-				<Modal>
+				{/* <Modal>
 					<form>
 						<label htmlFor="name">Expense name</label>
 						<input type="text" name="name"></input>
@@ -102,7 +118,8 @@ export default function Category({ categoryName, categoryID }: InputProps) {
 						<input type="number" name="value"></input>
 						<button>submit</button>
 					</form>
-				</Modal>
+				</Modal> */}
+				<button onClick={() => mutation.mutate()}>Add expense</button>
 			</article>
 		</>
 	);

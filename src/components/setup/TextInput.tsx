@@ -24,7 +24,7 @@ export default function TextInput({
 					editable ? setEditable(false) : setEditable(true)
 				}
 			>
-				✍️
+				{editable ? "√" : "✍️"}
 			</button>
 		</div>
 	);
