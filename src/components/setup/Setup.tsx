@@ -119,7 +119,15 @@ export default function Setup() {
 				})} */
 			}
 			{query.isLoading && <p>Loading...</p>}
-			<button onClick={() => mutation.mutate("s")}>Add category</button>
+			<button
+				onClick={() => {
+					const catName = prompt("Add new category");
+					if (!catName) return;
+					mutation.mutate(String(catName ? catName : ""));
+				}}
+			>
+				Add category
+			</button>
 		</main>
 	);
 }

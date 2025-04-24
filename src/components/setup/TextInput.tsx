@@ -12,6 +12,7 @@ export default function TextInput({
 			{editable && (
 				<input
 					defaultValue={expenseName}
+					onBlur={() => setEditable(false)}
 					onChange={(e) => {
 						setExpenseName(e.target.value);
 						handleMutation();

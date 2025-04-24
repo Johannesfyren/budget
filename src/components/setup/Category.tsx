@@ -17,8 +17,6 @@ export default function Category({ categoryName, categoryID }: InputProps) {
 	const mutation = useMutation({
 		mutationFn: () => createExpense(categoryID, "", 0, 1),
 		onSuccess: (data) => {
-			// Handle the success case here
-			console.log("Mutation successful:", data);
 			query.refetch();
 
 			// Optionally reset the changed input state
@@ -89,38 +87,30 @@ export default function Category({ categoryName, categoryID }: InputProps) {
 		}
 	};
 
-	function handleNewExpense() {
-		mutation.mutate();
-	}
 	return (
 		<>
-			<h2>{categoryName}</h2>
-			<article className={styles["section-container"]}>
-				{query.data &&
-					query.data.map((expense) => {
-						return (
-							<Input
-								inputName={expense.name}
-								payRate={expense.FKPayRate}
-								amount={expense.value}
-								categoryID={expense.categoryID}
-								expenseID={expense.id}
-								key={expense.id}
-							/>
-						);
-					})}
+			<div className={styles["category-wrapper"]}>
+				<h2>{categoryName}</h2>
+				<article className={styles["section-container"]}>
+					{query.data &&
+						query.data.map((expense) => {
+							return (
+								<Input
+									inputName={expense.name}
+									payRate={expense.FKPayRate}
+									amount={expense.value}
+									categoryID={expense.categoryID}
+									expenseID={expense.id}
+									key={expense.id}
+								/>
+							);
+						})}
 
-				{/* <Modal>
-					<form>
-						<label htmlFor="name">Expense name</label>
-						<input type="text" name="name"></input>
-						<label htmlFor="value">Amount</label>
-						<input type="number" name="value"></input>
-						<button>submit</button>
-					</form>
-				</Modal> */}
-				<button onClick={() => mutation.mutate()}>Add expense</button>
-			</article>
+					<button onClick={() => mutation.mutate()}>
+						Add expense
+					</button>
+				</article>
+			</div>
 		</>
 	);
 }
