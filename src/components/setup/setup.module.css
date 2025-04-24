@@ -97,3 +97,28 @@ input {
 	width: 100vw;
 	background-color: rgba(127, 27, 27, 0.5);
 }
+
+.category-wrapper {
+	display: flex;
+	flex-direction: column;
+	padding: 20px;
+	gap: 10px;
+
+	button {
+		width: 30px;
+		height: 30px;
+		align-self: center;
+		border: 1px solid gainsboro;
+		background-color: transparent;
+		border-radius: 50%;
+	}
+}
+
+.category-button {
+	width: 50%;
+	margin: 50px auto 0 auto;
+	padding: 10px;
+	background-color: transparent;
+	border: 1px solid rgb(94, 141, 250);
+	border-radius: 10px;
+}

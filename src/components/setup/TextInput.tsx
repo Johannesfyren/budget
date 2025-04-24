@@ -1,5 +1,10 @@
 import { useState } from "react";
 
+// interface textinput{
+// 	expenseName:string;
+// 	setExpenseName:string;
+// 	handleMutation:
+// }
 export default function TextInput({
 	expenseName = "",
 	setExpenseName,
@@ -8,7 +13,14 @@ export default function TextInput({
 	const [editable, setEditable] = useState(false);
 
 	return (
-		<div style={{ display: "flex", flexDirection: "row" }}>
+		<div
+			style={{
+				display: "flex",
+				flexDirection: "row",
+				alignItems: "center",
+				gap: "10px",
+			}}
+		>
 			{editable && (
 				<input
 					defaultValue={expenseName}

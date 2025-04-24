@@ -80,44 +80,16 @@ export default function Setup() {
 			<h1>Setup</h1>
 			<SetupNavigation />
 
-			{
-				query.data &&
-					query.data.map((category) => {
-						return (
-							<Category
-								categoryName={category.category}
-								categoryID={category.categoryID}
-								key={category.categoryID}
-							></Category>
-						);
-					})
-				/* {uniqueCategories.length > 0 &&
-				uniqueCategories.map((category) => {
+			{query.data &&
+				query.data.map((category) => {
 					return (
-						<Category categoryName={category} key={category}>
-							{query.data &&
-								query.data
-									.filter(
-										(expense) =>
-											expense.category == category
-									)
-									.sort((a, b) => a.expenseID - b.expenseID) //sorter array så vi får korrekt rækkefælge
-									.map((expense) => {
-										return (
-											<Input
-												inputName={expense.expenseName}
-												payRate={expense.payRate}
-												amount={expense.expenseValue}
-												categoryID={expense.categoryID}
-												expenseID={expense.expenseID}
-												key={expense.expenseID}
-											/>
-										);
-									})}
-						</Category>
+						<Category
+							categoryName={category.category}
+							categoryID={category.categoryID}
+							key={category.categoryID}
+						></Category>
 					);
-				})} */
-			}
+				})}
 			{query.isLoading && <p>Loading...</p>}
 			<button
 				onClick={() => {
@@ -125,6 +97,7 @@ export default function Setup() {
 					if (!catName) return;
 					mutation.mutate(String(catName ? catName : ""));
 				}}
+				className={styles["category-button"]}
 			>
 				Add category
 			</button>

@@ -106,9 +106,7 @@ export default function Category({ categoryName, categoryID }: InputProps) {
 							);
 						})}
 
-					<button onClick={() => mutation.mutate()}>
-						Add expense
-					</button>
+					<button onClick={() => mutation.mutate()}>＋</button>
 				</article>
 			</div>
 		</>
