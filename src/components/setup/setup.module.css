@@ -114,6 +114,10 @@ input {
 	background-color: transparent;
 	border: 1px solid rgb(94, 141, 250);
 	border-radius: 10px;
+	&:hover {
+		background-color: rgb(94, 141, 250);
+		cursor: pointer;
+	}
 }
 
 .textinput-wrapper {
@@ -124,13 +128,13 @@ input {
 	justify-content: space-between;
 }
 
-.delete-button {
+/* .delete-button {
 	padding: 5px;
 	border: 1px solid rgb(255, 98, 98);
 	background-color: transparent;
 	color: white;
 	border-radius: 5px;
-}
+} */
 .add-button {
 	padding: 5px;
 	border: 1px solid rgb(94, 141, 250);
@@ -139,7 +143,13 @@ input {
 
 	background-color: transparent;
 	border-radius: 5px;
+
+	&:hover {
+		background-color: rgb(94, 141, 250);
+		cursor: pointer;
+	}
 }
+
 img {
 	cursor: pointer;
 }

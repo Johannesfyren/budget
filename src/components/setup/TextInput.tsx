@@ -30,10 +30,22 @@ export default function TextInput({
 				<input
 					ref={inputRef}
 					defaultValue={expenseName}
-					onBlur={() => setEditable(false)}
+					onKeyDown={(e) => {
+						if (e.key == "Enter" || e.key == "Tab") {
+							handleMutation();
+							setEditable(false);
+						}
+					}}
 					onChange={(e) => {
 						setExpenseName(e.target.value);
-						handleMutation();
+					}}
+					onClick={(e) => {
+						if (e.target != inputRef.current) {
+							console.log("not same");
+						} else {
+							console.log(inputRef.current);
+							console.log(e.target);
+						}
 					}}
 				></input>
 			)}
@@ -47,6 +59,7 @@ export default function TextInput({
 				height={"20px"}
 				onClick={() => {
 					setEditable(!editable);
+					if (editable) handleMutation();
 				}}
 			/>
 
