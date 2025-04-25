@@ -41,9 +41,9 @@ export default function Category({ categoryName, categoryID }: InputProps) {
 				}
 			);
 
-			// if (response.status >= 401) {
-			// 	navigate("/login");
-			// }
+			if (response.status >= 401) {
+				navigate("/login");
+			}
 
 			const data = await response.json();
 
@@ -106,7 +106,12 @@ export default function Category({ categoryName, categoryID }: InputProps) {
 							);
 						})}
 
-					<button onClick={() => mutation.mutate()}>＋</button>
+					<button
+						className={styles["add-button"]}
+						onClick={() => mutation.mutate()}
+					>
+						Add Expense
+					</button>
 				</article>
 			</div>
 		</>

@@ -21,8 +21,8 @@ export default function Input({
 	const [selectedPayrate, setSelectedPayrate] = useState(payRate);
 	const [selectedAmount, setSelectedAmount] = useState(amount);
 	const [expenseName, setExpenseName] = useState(inputName ? inputName : "");
-
 	const [error, setError] = useState(false);
+	const queryClient = useQueryClient();
 
 	const saveChangeToDB = async (amount: number, payRate: number) => {
 		try {
@@ -52,16 +52,44 @@ export default function Input({
 			throw error;
 		}
 	};
+	const deleteExpense = async (expenseID: number) => {
+		try {
+			const response = await fetch(
+				`http://127.0.0.1:3001/setup/deleteExpense/${expenseID}`,
+				{
+					headers: {
+						authorization: `authorization ${localStorage.getItem(
+							"accessToken"
+						)}`,
+						"content-type": "application/json",
+					},
+					method: "DELETE",
+				}
+			);
+			const data = await response.text();
+			return data;
+		} catch (error) {
+			console.log(error);
+			throw error;
+		}
+	};
+	const mutation_deleteExpense = useMutation({
+		mutationFn: (expenseID: number) => deleteExpense(expenseID),
+		onSuccess: (data) => {
+			console.log("deleted");
+			queryClient.refetchQueries();
+		},
 
+		onError: (error) => {
+			// Handle the error case here
+			console.error("Mutation failed:", error);
+			setError(true);
+		},
+	});
 	const mutation = useMutation({
 		mutationFn: () => saveChangeToDB(selectedAmount, selectedPayrate),
 		onSuccess: (data) => {
-			// Handle the success case here
-			console.log("Mutation successful:", data);
-
-			// Optionally reset the changed input state
-
-			// Perform any additional actions, like invalidating queries or showing a success message
+			queryClient.refetchQueries();
 		},
 		onError: (error) => {
 			// Handle the error case here
@@ -72,6 +100,9 @@ export default function Input({
 	const triggerMutate = () => {
 		mutation.mutate();
 	};
+	const triggerDelete = () => {
+		mutation_deleteExpense.mutate(expenseID);
+	};
 	return (
 		<div className={styles["input-container"]}>
 			<label htmlFor={expenseName}>
@@ -79,6 +110,7 @@ export default function Input({
 					expenseName={expenseName}
 					setExpenseName={setExpenseName}
 					handleMutation={triggerMutate}
+					handleDeletion={triggerDelete}
 				/>
 			</label>
 			<div className={styles["input-select-wrapper"]}>
@@ -86,7 +118,7 @@ export default function Input({
 					type="number"
 					name={expenseName}
 					id={expenseName}
-					defaultValue={amount}
+					defaultValue={amount == 0 ? "" : amount}
 					onChange={(e) => {
 						setSelectedAmount(Number(e.target.value));
 					}}
@@ -96,7 +128,7 @@ export default function Input({
 				/>
 
 				<select
-					name="select1"
+					name="select"
 					defaultValue={payRate}
 					onChange={(e) => {
 						setSelectedPayrate(Number(e.target.value));
