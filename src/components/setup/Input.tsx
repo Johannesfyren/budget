@@ -117,7 +117,6 @@ export default function Input({
 				<input
 					type="number"
 					name={expenseName}
-					id={expenseName}
 					defaultValue={amount == 0 ? "" : amount}
 					onChange={(e) => {
 						setSelectedAmount(Number(e.target.value));
