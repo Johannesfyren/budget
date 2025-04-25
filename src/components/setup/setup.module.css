@@ -2,6 +2,7 @@
 	display: flex;
 	flex-direction: column;
 	width: 100%;
+	padding: 20px;
 }
 
 .section-container {
@@ -102,9 +103,8 @@ input {
 .category-wrapper {
 	display: flex;
 	flex-direction: column;
-
-	padding: 20px;
 	gap: 10px;
+	margin: 20px 0 20px 0;
 }
 
 .category-button {

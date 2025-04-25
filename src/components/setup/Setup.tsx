@@ -13,7 +13,7 @@ export default function Setup() {
 		queryKey: ["categories", params.ID],
 		queryFn: () => getCategories(Number(params.ID)),
 	});
-	console.log(params);
+
 	const mutation = useMutation({
 		mutationFn: (name: string) => createCategory(Number(params.ID), name), //Tjek liiiiige at dette (name) er korret
 	});
