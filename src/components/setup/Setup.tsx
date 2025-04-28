@@ -1,6 +1,7 @@
 import Category from "./Category";
 import styles from "./setup.module.css";
 import SetupNavigation from "./SetupNavigation";
+import SummarySnippet from "./SummarySnippet";
 import { useQueryClient, useMutation, useQuery } from "@tanstack/react-query";
 import { useParams, useNavigate } from "react-router";
 
@@ -101,6 +102,7 @@ export default function Setup() {
 			>
 				Add category
 			</button>
+			<SummarySnippet />
 		</main>
 	);
 }

@@ -82,7 +82,7 @@ input {
 	border: 1px solid blue;
 }
 
-.modal {
+/* .modal {
 	position: absolute;
 	width: 400px;
 	top: 50%;
@@ -98,18 +98,18 @@ input {
 	height: 100vh;
 	width: 100vw;
 	background-color: rgba(127, 27, 27, 0.5);
-}
+} */
 
 .category-wrapper {
 	display: flex;
 	flex-direction: column;
 	gap: 10px;
-	margin: 20px 0 20px 0;
+	margin: 30px 0 30px 0;
 }
 
 .category-button {
 	width: 50%;
-	margin: 50px auto 0 auto;
+	margin: 50px auto 100px auto;
 	padding: 10px;
 	background-color: transparent;
 	border: 1px solid rgb(94, 141, 250);
@@ -152,4 +152,26 @@ input {
 
 img {
 	cursor: pointer;
+}
+.summary-container {
+	position: fixed;
+	display: flex;
+	flex-direction: row;
+	gap: 20px;
+	padding: 10px;
+	border-radius: 10px 10px 0 0;
+	bottom: 0px;
+	margin: 0 auto 0 auto;
+	align-self: center;
+	margin-top: auto;
+	background-color: blue;
+
+	h3 {
+		font: 300;
+		color: white;
+		font-size: 0.8rem;
+	}
+	span {
+		color: white;
+	}
 }
