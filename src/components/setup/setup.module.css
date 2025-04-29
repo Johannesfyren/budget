@@ -61,6 +61,7 @@ input {
 		border: none;
 		content: "";
 		cursor: pointer;
+		color: #afadad;
 	}
 	select::after {
 		content: "s";
@@ -126,15 +127,25 @@ input {
 	align-items: center;
 	gap: 10px;
 	justify-content: space-between;
+
+	&:hover {
+		.hidden {
+			visibility: visible;
+		}
+	}
+	.hidden {
+		width: 20px;
+		height: 20px;
+		margin: 4px; /*Makes the bar NOT jump up and down*/
+		visibility: hidden;
+	}
+	img:hover {
+		background-color: rgb(237, 237, 237);
+		border-radius: 5px;
+		box-shadow: 0 0 4px rgb(185, 185, 185);
+	}
 }
 
-/* .delete-button {
-	padding: 5px;
-	border: 1px solid rgb(255, 98, 98);
-	background-color: transparent;
-	color: white;
-	border-radius: 5px;
-} */
 .add-button {
 	padding: 5px;
 	border: 1px solid rgb(94, 141, 250);
@@ -172,14 +183,18 @@ img {
 		font-size: 0.8rem;
 		text-align: end;
 		align-self: center;
+		span {
+			font-weight: 300;
+			color: white;
+		}
 	}
 	h3.summary-surplus {
 		color: rgb(14, 186, 14);
 	}
 	h3.summary-deficit {
-		color: rgb(249, 64, 64);
+		color: rgb(248, 104, 104);
 	}
-	span {
+	.divider {
 		color: white;
 	}
 }

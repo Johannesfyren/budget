@@ -13,7 +13,6 @@ export function getUniqueCategories(data: Array<{ category: string }>) {
 }
 
 export function setCurrencyPeriod(value: number, returnCurrencyText: boolean) {
-	if (value < 1000) return value;
 	if (returnCurrencyText) {
 		return new Intl.NumberFormat("da-DK", {
 			style: "currency",

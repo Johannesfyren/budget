@@ -38,11 +38,15 @@ export default function SummarySnippet() {
 
 	return (
 		<div className={styles["summary-container"]}>
-			<h3>Expenses: {setCurrencyPeriod(expenseTotal, true)}</h3>
+			<h3>
+				<span>Expenses:</span> {setCurrencyPeriod(expenseTotal, true)}
+			</h3>
 
-			<span>|</span>
-			<h3>Income: {setCurrencyPeriod(incomeTotal, true)}</h3>
-			<span>|</span>
+			<span className={styles["divider"]}>|</span>
+			<h3>
+				<span>Income:</span> {setCurrencyPeriod(incomeTotal, true)}
+			</h3>
+			<span className={styles["divider"]}>|</span>
 			<h3
 				className={
 					incomeTotal - expenseTotal >= 0
@@ -50,7 +54,11 @@ export default function SummarySnippet() {
 						: styles["summary-deficit"]
 				}
 			>
-				{incomeTotal - expenseTotal >= 0 ? "Surplus: " : "Deficit: "}
+				<span>
+					{incomeTotal - expenseTotal >= 0
+						? "Surplus: "
+						: "Deficit: "}
+				</span>
 				{setCurrencyPeriod(incomeTotal - expenseTotal, true)}
 			</h3>
 		</div>

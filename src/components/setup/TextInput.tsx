@@ -55,6 +55,7 @@ export default function TextInput({
 			<img
 				src={editable ? createCheckmarkIcon : createOutlineIcon}
 				alt=""
+				className={editable ? "" : styles["hidden"]}
 				width={"20px"}
 				height={"20px"}
 				onClick={() => {

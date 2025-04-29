@@ -129,6 +129,7 @@ export default function Input({
 
 				<select
 					name="select"
+					className={styles["select-payrate"]}
 					defaultValue={payRate}
 					onChange={(e) => {
 						setSelectedPayrate(Number(e.target.value));
