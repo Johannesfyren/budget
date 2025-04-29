@@ -158,18 +158,26 @@ img {
 	display: flex;
 	flex-direction: row;
 	gap: 20px;
-	padding: 10px;
+	padding: 10px 20px 10px 20px;
 	border-radius: 10px 10px 0 0;
 	bottom: 0px;
 	margin: 0 auto 0 auto;
 	align-self: center;
 	margin-top: auto;
-	background-color: blue;
+	background-color: rgb(75, 75, 93);
 
 	h3 {
 		font: 300;
 		color: white;
 		font-size: 0.8rem;
+		text-align: end;
+		align-self: center;
+	}
+	h3.summary-surplus {
+		color: rgb(14, 186, 14);
+	}
+	h3.summary-deficit {
+		color: rgb(249, 64, 64);
 	}
 	span {
 		color: white;

@@ -1,13 +1,58 @@
 import styles from "./setup.module.css";
-import { createPortal } from "react-dom";
+import { useQuery } from "@tanstack/react-query";
+import { setCurrencyPeriod } from "../../utils/helper";
+
 export default function SummarySnippet() {
+	const querySummary = useQuery({
+		queryKey: ["expenseSummary"],
+		queryFn: () => getExpenseSummary(),
+	});
+	let expenseTotal = querySummary.data?.expenseSum?.[0]?.total || 0;
+	let incomeTotal = querySummary.data?.incomeSum?.[0]?.total || 0;
+
+	const getExpenseSummary = async () => {
+		try {
+			const response = await fetch(
+				`http://127.0.0.1:3001/setup/expenses/getExpenseSummary`,
+				{
+					headers: {
+						authorization: `authorization ${localStorage.getItem(
+							"accessToken"
+						)}`,
+					},
+				}
+			);
+
+			if (response.status >= 401) {
+				console.log("couldnt fetch summary");
+			}
+
+			const data = await response.json();
+			expenseTotal = data.expenseSum[0].total;
+			incomeTotal = data.incomeSum[0].total;
+			return data;
+		} catch (error) {
+			console.log(error);
+		}
+	};
+
 	return (
 		<div className={styles["summary-container"]}>
-			<h3>Expenses: 200DKK</h3>
+			<h3>Expenses: {setCurrencyPeriod(expenseTotal, true)}</h3>
+
 			<span>|</span>
-			<h3>Income</h3>
+			<h3>Income: {setCurrencyPeriod(incomeTotal, true)}</h3>
 			<span>|</span>
-			<h3>Surplus</h3>
+			<h3
+				className={
+					incomeTotal - expenseTotal >= 0
+						? styles["summary-surplus"]
+						: styles["summary-deficit"]
+				}
+			>
+				{incomeTotal - expenseTotal >= 0 ? "Surplus: " : "Deficit: "}
+				{setCurrencyPeriod(incomeTotal - expenseTotal, true)}
+			</h3>
 		</div>
 	);
 }

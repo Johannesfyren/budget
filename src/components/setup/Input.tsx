@@ -2,6 +2,7 @@ import { useState } from "react";
 import styles from "./setup.module.css";
 import { useQueryClient, useMutation } from "@tanstack/react-query";
 import TextInput from "./TextInput";
+import { setCurrencyPeriod } from "../../utils/helper";
 
 interface InputProps {
 	inputName: string;

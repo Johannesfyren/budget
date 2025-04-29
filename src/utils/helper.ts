@@ -1,4 +1,4 @@
-export default function getUniqueCategories(data: Array<{ category: string }>) {
+export function getUniqueCategories(data: Array<{ category: string }>) {
 	const uniqueCategories: string[] = [];
 
 	for (let i = 0; i < data.length; i++) {
@@ -12,4 +12,15 @@ export default function getUniqueCategories(data: Array<{ category: string }>) {
 	return uniqueCategories;
 }
 
-//export { getUniqueCategories };
+export function setCurrencyPeriod(value: number, returnCurrencyText: boolean) {
+	if (value < 1000) return value;
+	if (returnCurrencyText) {
+		return new Intl.NumberFormat("da-DK", {
+			style: "currency",
+			currency: "DKK",
+		}).format(value);
+	} else {
+		return new Intl.NumberFormat("da-DK").format(value);
+	}
+}
+// export { getUniqueCategories, setCurrencyPeriod };
