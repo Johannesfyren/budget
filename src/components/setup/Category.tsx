@@ -15,9 +15,9 @@ export default function Category({ categoryName, categoryID }: InputProps) {
 	});
 
 	const mutation = useMutation({
-		mutationFn: () => createExpense(categoryID, "", 0, 1),
+		mutationFn: () => createExpense(categoryID, "Expense", 0, 1),
 		onSuccess: (data) => {
-			query.refetch();
+			query.refetch(); //refetching to assure the UI updates with the newest expense immediatly
 
 			// Optionally reset the changed input state
 
