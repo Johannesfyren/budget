@@ -17,7 +17,10 @@ export default function SideNavBar() {
 				}
 				end
 			>
-				<NavItem imgSrc={createHomeIcon} itemName={"Home"}></NavItem>
+				<NavItem
+					imgSrc={createHomeIcon}
+					itemName={"Overview"}
+				></NavItem>
 			</NavLink>
 			<NavLink
 				to={"/setup/1"}
