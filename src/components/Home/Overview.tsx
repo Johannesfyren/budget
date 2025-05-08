@@ -8,9 +8,8 @@ export default function Home() {
 		<div
 			style={{ display: "flex", flexDirection: "column", width: "100%" }}
 		>
-			<h1>Home</h1>
-
 			<div className={styles["container"]}>
+				<h1>Home</h1>
 				<ContentContainer size="4">
 					<BarChart />
 				</ContentContainer>

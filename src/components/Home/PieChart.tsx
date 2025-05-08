@@ -43,19 +43,21 @@ export default function PieChart({ sectionID, chartName }: chartTypes) {
 								fontWeight: "bold",
 							},
 							{
-								text: queryGetCategories.data
-									?.reduce(
-										(
-											accumulator: number,
-											currentVal: {
-												totalExpenses: number;
-											}
-										) =>
-											accumulator +
-											currentVal.totalExpenses,
-										0
-									)
-									.toString(),
+								text: `${
+									queryGetCategories.data
+										?.reduce(
+											(
+												accumulator: number,
+												currentVal: {
+													totalExpenses: number;
+												}
+											) =>
+												accumulator +
+												currentVal.totalExpenses,
+											0
+										)
+										.toString() + " kr."
+								}`,
 								spacing: 4,
 								fontSize: 18,
 								color: "blue",

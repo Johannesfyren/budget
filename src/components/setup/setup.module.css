@@ -42,7 +42,8 @@ input {
 		display: flex;
 		justify-content: center;
 		align-items: center;
-		background-color: rgb(220, 207, 249);
+		background-color: #8797af;
+		color: white;
 		border-radius: 100px;
 		height: 48px;
 	}
@@ -113,10 +114,10 @@ input {
 	margin: 50px auto 100px auto;
 	padding: 10px;
 	background-color: transparent;
-	border: 1px solid rgb(94, 141, 250);
-	border-radius: 10px;
+	border: 2px solid #90e0ef;
+	border-radius: 5px;
 	&:hover {
-		background-color: rgb(94, 141, 250);
+		background-color: #90e0ef;
 		cursor: pointer;
 	}
 }
@@ -151,12 +152,11 @@ input {
 	border: 1px solid rgb(94, 141, 250);
 	height: 30px;
 	align-self: center;
-
 	background-color: transparent;
+	border: 2px solid #90e0ef;
 	border-radius: 5px;
-
 	&:hover {
-		background-color: rgb(94, 141, 250);
+		background-color: #90e0ef;
 		cursor: pointer;
 	}
 }

@@ -4,8 +4,10 @@ import createLogo from "../../assets/Logo.png";
 import createHomeIcon from "../../assets/Home.svg";
 import createSetupIcon from "../../assets/settings.svg";
 import NavItem from "./NavItem";
+import { useState } from "react";
 
 export default function SideNavBar() {
+	const [expanded, setExpanded] = useState(true);
 	return (
 		<nav className={styles["navigation"]}>
 			<img src={createLogo} alt="" className={styles["logo"]} />
