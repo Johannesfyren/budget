@@ -12,6 +12,7 @@ interface chartTypes {
 export default function PieChart({ sectionID, chartName }: chartTypes) {
 	const params = useParams();
 	const navigate = useNavigate();
+	let categorySum = 0;
 	const queryGetCategories = useQuery({
 		queryKey: ["categoriesSumBySection", sectionID],
 		queryFn: () => getCategories(Number(sectionID)),
@@ -31,18 +32,31 @@ export default function PieChart({ sectionID, chartName }: chartTypes) {
 						fontWeight: "bold",
 					},
 					{
-						text: "$100,000",
+						text: queryGetCategories.data
+							?.reduce(
+								(
+									accumulator: number,
+									currentVal: {
+										totalExpenses: number;
+									}
+								) => accumulator + currentVal.totalExpenses,
+								0
+							)
+							.toString(),
 						spacing: 4,
-						fontSize: 48,
+						fontSize: 18,
 						color: "blue",
 					},
 				],
 				innerCircle: {
-					fill: "#000",
+					fill: "#efefef",
 				},
 			},
 		],
 		theme: "ag-vivid",
+		legend: {
+			enabled: false, // Disable the legend
+		},
 	});
 
 	useEffect(() => {
@@ -60,18 +74,33 @@ export default function PieChart({ sectionID, chartName }: chartTypes) {
 								fontWeight: "bold",
 							},
 							{
-								text: "$100,",
+								text: queryGetCategories.data
+									?.reduce(
+										(
+											accumulator: number,
+											currentVal: {
+												totalExpenses: number;
+											}
+										) =>
+											accumulator +
+											currentVal.totalExpenses,
+										0
+									)
+									.toString(),
 								spacing: 4,
-								fontSize: 48,
+								fontSize: 18,
 								color: "blue",
 							},
 						],
 						innerCircle: {
-							fill: "#000",
+							fill: "#efefef",
 						},
 					},
 				],
 				theme: "ag-vivid",
+				legend: {
+					enabled: false, // Disable the legend
+				},
 			});
 		}
 	}, [queryGetCategories.data, queryGetCategories.isSuccess]);
@@ -94,7 +123,13 @@ export default function PieChart({ sectionID, chartName }: chartTypes) {
 			}
 
 			const data = await response.json();
-
+			const initialValue = 0;
+			const categorySum = data?.reduce(
+				(accumulator: number, currentVal: number) =>
+					accumulator + currentVal.totalExpenses,
+				initialValue
+			);
+			console.log(categorySum);
 			return data;
 		} catch (error) {
 			console.log(error);
@@ -103,14 +138,9 @@ export default function PieChart({ sectionID, chartName }: chartTypes) {
 	};
 
 	return (
-		<>
+		<div className={styles["chart-container"]}>
 			<h2>{chartName}</h2>
-			{queryGetCategories.data && (
-				<AgCharts
-					options={pieChartOptions}
-					className={styles["donut-chart"]}
-				/>
-			)}
-		</>
+			{queryGetCategories.data && <AgCharts options={pieChartOptions} />}
+		</div>
 	);
 }

@@ -53,14 +53,9 @@ export default function BarChart() {
 	};
 
 	return (
-		<>
+		<div className={styles["chart-container"]}>
 			<h2>Expenses overview</h2>
-			{queryGetCategories.data && (
-				<AgCharts
-					options={barChartOptions}
-					className={styles["bar-chart"]}
-				/>
-			)}
-		</>
+			{queryGetCategories.data && <AgCharts options={barChartOptions} />}
+		</div>
 	);
 }
