@@ -1,7 +1,7 @@
 import { useQuery, useMutation } from "@tanstack/react-query";
 import Input from "./Input";
 import styles from "./setup.module.css";
-import Modal from "./Modal";
+import { motion } from "motion/react";
 
 interface InputProps {
 	categoryID: number;
@@ -106,12 +106,13 @@ export default function Category({ categoryName, categoryID }: InputProps) {
 							);
 						})}
 
-					<button
+					<motion.button
+						whileHover={{ scale: 1.1 }}
 						className={styles["add-button"]}
 						onClick={() => mutation.mutate()}
 					>
 						Add Expense
-					</button>
+					</motion.button>
 				</article>
 			</div>
 		</>

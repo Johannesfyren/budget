@@ -3,6 +3,7 @@ import styles from "./setup.module.css";
 import createOutlineIcon from "../../assets/create-outline.svg";
 import createCheckmarkIcon from "../../assets/checkmark-outline.svg";
 import createTrashcanIcon from "../../assets/trash.svg";
+import { motion } from "motion/react";
 
 // interface textinput{
 // 	expenseName:string;
@@ -52,34 +53,48 @@ export default function TextInput({
 
 			{!editable && <p>{expenseName}</p>}
 
-			<img
-				src={editable ? createCheckmarkIcon : createOutlineIcon}
-				alt=""
-				className={editable ? "" : styles["hidden"]}
-				width={"20px"}
-				height={"20px"}
-				onClick={() => {
-					setEditable(!editable);
-					if (editable) handleMutation();
+			<motion.div
+				whileHover={{ scale: 1.1 }}
+				style={{
+					display: "flex",
+					flexDirection: "row-reverse",
+					gap: "10px",
+					border: editable ? "1px solid #00B4D8" : "",
+					borderRadius: "5px",
+					padding: editable ? "3px" : "",
 				}}
-			/>
-
-			{editable && (
-				<img
-					src={createTrashcanIcon}
+			>
+				<motion.img
+					whileHover={{ scale: 1.1 }}
+					src={editable ? createCheckmarkIcon : createOutlineIcon}
 					alt=""
+					className={editable ? "" : styles["hidden"]}
 					width={"20px"}
 					height={"20px"}
 					onClick={() => {
-						const deleteConfirmation = confirm(
-							`Do you want to delete "${expenseName}"?`
-						);
-						if (deleteConfirmation == true) {
-							handleDeletion();
-						} else return null;
+						setEditable(!editable);
+						if (editable) handleMutation();
 					}}
 				/>
-			)}
+
+				{editable && (
+					<motion.img
+						whileHover={{ scale: 1.1 }}
+						src={createTrashcanIcon}
+						alt=""
+						width={"20px"}
+						height={"20px"}
+						onClick={() => {
+							const deleteConfirmation = confirm(
+								`Do you want to delete "${expenseName}"?`
+							);
+							if (deleteConfirmation == true) {
+								handleDeletion();
+							} else return null;
+						}}
+					/>
+				)}
+			</motion.div>
 		</div>
 	);
 }

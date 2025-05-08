@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router";
 import { AgCharts } from "ag-charts-react";
 import styles from "./home.module.css";
+import { motion } from "motion/react";
 
 interface chartTypes {
 	sectionID: number;
@@ -10,9 +11,8 @@ interface chartTypes {
 }
 
 export default function PieChart({ sectionID, chartName }: chartTypes) {
-	const params = useParams();
 	const navigate = useNavigate();
-	let categorySum = 0;
+
 	const queryGetCategories = useQuery({
 		queryKey: ["categoriesSumBySection", sectionID],
 		queryFn: () => getCategories(Number(sectionID)),
@@ -21,38 +21,7 @@ export default function PieChart({ sectionID, chartName }: chartTypes) {
 		// Data: Data to be displayed in the chart
 		data: queryGetCategories.data,
 		// Series: Defines which chart type and data to use
-		series: [
-			{
-				type: "donut",
-				angleKey: "totalExpenses",
-				calloutLabelKey: "categoryName",
-				innerLabels: [
-					{
-						text: "Total Expense",
-						fontWeight: "bold",
-					},
-					{
-						text: queryGetCategories.data
-							?.reduce(
-								(
-									accumulator: number,
-									currentVal: {
-										totalExpenses: number;
-									}
-								) => accumulator + currentVal.totalExpenses,
-								0
-							)
-							.toString(),
-						spacing: 4,
-						fontSize: 18,
-						color: "blue",
-					},
-				],
-				innerCircle: {
-					fill: "#efefef",
-				},
-			},
-		],
+
 		theme: "ag-vivid",
 		legend: {
 			enabled: false, // Disable the legend
@@ -123,13 +92,7 @@ export default function PieChart({ sectionID, chartName }: chartTypes) {
 			}
 
 			const data = await response.json();
-			const initialValue = 0;
-			const categorySum = data?.reduce(
-				(accumulator: number, currentVal: number) =>
-					accumulator + currentVal.totalExpenses,
-				initialValue
-			);
-			console.log(categorySum);
+
 			return data;
 		} catch (error) {
 			console.log(error);
@@ -138,9 +101,13 @@ export default function PieChart({ sectionID, chartName }: chartTypes) {
 	};
 
 	return (
-		<div className={styles["chart-container"]}>
+		<motion.div
+			className={styles["chart-container"]}
+			initial={{ opacity: 0.5, scale: 0.99 }}
+			animate={{ opacity: 1, scale: 1 }}
+		>
 			<h2>{chartName}</h2>
 			{queryGetCategories.data && <AgCharts options={pieChartOptions} />}
-		</div>
+		</motion.div>
 	);
 }

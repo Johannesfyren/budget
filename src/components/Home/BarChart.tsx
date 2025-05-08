@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router";
 import { AgCharts } from "ag-charts-react";
 import styles from "./home.module.css";
+import { motion } from "motion/react";
 
 export default function BarChart() {
 	const params = useParams();
@@ -53,9 +54,13 @@ export default function BarChart() {
 	};
 
 	return (
-		<div className={styles["chart-container"]}>
+		<motion.div
+			className={styles["chart-container"]}
+			initial={{ opacity: 0.5, scale: 0.99 }}
+			animate={{ opacity: 1, scale: 1 }}
+		>
 			<h2>Expenses overview</h2>
 			{queryGetCategories.data && <AgCharts options={barChartOptions} />}
-		</div>
+		</motion.div>
 	);
 }

@@ -1,10 +1,14 @@
 import { NavLink } from "react-router";
 import styles from "./setup.module.css";
+import { motion } from "motion/react";
 
 export default function SetupNavigation() {
 	return (
 		<>
-			<nav className={styles["nav-container"]}>
+			<motion.nav
+				className={styles["nav-container"]}
+				whileHover={{ scale: 1.02 }}
+			>
 				<NavLink
 					to={"/setup/1"}
 					className={({ isActive }) =>
@@ -45,7 +49,7 @@ export default function SetupNavigation() {
 				>
 					Income
 				</NavLink>
-			</nav>
+			</motion.nav>
 		</>
 	);
 }
